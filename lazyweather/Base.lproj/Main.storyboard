@@ -36,7 +36,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="186"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQl-IP-Qx6">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DQl-IP-Qx6">
                                                     <rect key="frame" x="0.0" y="0.0" width="106" height="126"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="126" id="EMe-io-wcw">
@@ -54,9 +54,12 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="asda" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BN-gd-ncl">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asda" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BN-gd-ncl">
                                                     <rect key="frame" x="32" y="146" width="42" height="21"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="xS2-bR-Hud"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="LaoSangamMN" family="Lao Sangam MN" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -66,13 +69,20 @@
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="DQl-IP-Qx6" firstAttribute="top" secondItem="AFL-OI-SZF" secondAttribute="top" id="7Hk-ac-POV"/>
                                             <constraint firstItem="DQl-IP-Qx6" firstAttribute="leading" secondItem="AFL-OI-SZF" secondAttribute="leading" id="be6-z0-doG"/>
+                                            <constraint firstItem="8BN-gd-ncl" firstAttribute="centerX" secondItem="AFL-OI-SZF" secondAttribute="centerX" id="dPQ-0a-pOu"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="8BN-gd-ncl" secondAttribute="bottom" constant="11" id="lNw-Bp-Hu3"/>
+                                            <constraint firstItem="DQl-IP-Qx6" firstAttribute="leading" secondItem="AFL-OI-SZF" secondAttribute="leading" id="lRT-ND-vPX"/>
                                             <constraint firstItem="8BN-gd-ncl" firstAttribute="top" secondItem="DQl-IP-Qx6" secondAttribute="bottom" constant="20" id="llC-BC-YYe">
                                                 <variation key="widthClass=compact" constant="0.0"/>
                                             </constraint>
                                             <constraint firstAttribute="trailingMargin" secondItem="8BN-gd-ncl" secondAttribute="trailing" constant="5" id="lw4-Ga-9gT">
                                                 <variation key="widthClass=compact" constant="0.0"/>
                                             </constraint>
+                                            <constraint firstItem="8BN-gd-ncl" firstAttribute="leading" secondItem="AFL-OI-SZF" secondAttribute="leadingMargin" constant="24" id="pv0-Vs-IjE"/>
+                                            <constraint firstItem="8BN-gd-ncl" firstAttribute="centerX" secondItem="DQl-IP-Qx6" secondAttribute="centerX" id="qjR-Q0-zwE"/>
+                                            <constraint firstItem="8BN-gd-ncl" firstAttribute="top" secondItem="DQl-IP-Qx6" secondAttribute="bottom" constant="20" id="qnf-JH-1uo"/>
                                             <constraint firstItem="DQl-IP-Qx6" firstAttribute="top" secondItem="AFL-OI-SZF" secondAttribute="top" id="roZ-Nv-OUB"/>
                                             <constraint firstItem="8BN-gd-ncl" firstAttribute="leading" secondItem="AFL-OI-SZF" secondAttribute="leadingMargin" constant="24" id="wFo-vw-OTw">
                                                 <variation key="widthClass=compact" constant="0.0"/>

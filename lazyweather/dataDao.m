@@ -25,12 +25,12 @@
     
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         
-        NSLog(@"responseData : %@", [operation responseString]);
+//        NSLog(@"responseData : %@", [operation responseString]);
         NSData *data = [operation responseData];
         NSDictionary *mweather = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSArray *interData = [mweather objectForKey:@"result"];
 //        NSDictionary *m = interData[0];
-        NSLog(@"------------%@",[interData[0] valueForKey:@"week"]);
+        NSLog(@"------------%@",[interData[0] valueForKey:@"citynm"]);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"leftData" object:interData];
         
     } errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {

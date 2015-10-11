@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<array/>
+	<string>苏州</string>
 	<array>
 		<string>NO</string>
 		<string>NO</string>
@@ -14,6 +14,9 @@
 		<string>NO</string>
 		<string>NO</string>
 	</array>
-	<array/>
+	<array>
+		<string>定位</string>
+		<string>苏州</string>
+	</array>
 </array>
 </plist>
