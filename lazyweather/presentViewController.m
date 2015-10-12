@@ -56,8 +56,9 @@
     [_scrollview addSubview:textView1];
     int pagenum = [[self.objects lastObject] intValue];
     [_scrollview setContentOffset:CGPointMake(0+320*pagenum,0) animated:YES];
-    
 }
+
+//文字数据处理
 -(NSString *)wenzichuli:(NSString *)string
 {
     if([string rangeOfString:@"转"].location != NSNotFound){
@@ -77,11 +78,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+//关闭按钮
 -(void)closepresent
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark ---------------UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat painyi = _scrollview.contentOffset.x / iOSDeviceScreenSize.width;

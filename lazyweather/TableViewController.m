@@ -63,6 +63,7 @@
     return cell;
 }
 
+#pragma mark  ---------------tableview delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 113.6f;
@@ -76,6 +77,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+//通知传回数据
 -(void)chaxunData:(NSNotification *)notification
 {
     self.objects = [notification object];

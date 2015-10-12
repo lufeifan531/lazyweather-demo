@@ -10,6 +10,7 @@
 
 @implementation dataDao
 
+//获取网络数据
 -(void)startRequest
 {
     localData *save = [localData sharedManager];

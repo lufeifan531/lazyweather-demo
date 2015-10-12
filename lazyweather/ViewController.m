@@ -21,7 +21,7 @@
 @property (strong,nonatomic) NSArray *objects;
 @property (strong,nonatomic) UIRefreshControl *rc;
 @property (strong,nonatomic) CLLocationManager *locationManager;
-//@property (nonatomic) CGFloat pianyi;
+
 
 @end
 
@@ -38,41 +38,48 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //定位服务初始化并弹出用户授权对话框
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager requestWhenInUseAuthorization];
     [self.locationManager requestAlwaysAuthorization];
-    // Do any additional setup after loading the view, typically from a nib.
-    images = [[NSArray alloc]init];
-    images = [NSArray arrayWithObjects:@"w0_n",@"w1_n",@"w3_n",@"w4_n",@"w5_n",@"w6_n",@"w7_n",@"w8_n" ,@"w9_n" ,@"w10_n" ,nil];
+    
+    //主页面collectionview初始化，设置代理
     self.collectionview1.frame = CGRectMake(0, 0, 320, 1000);
     _collectionview1.delegate = self;
     _collectionview1.dataSource = self;
     imageview0 = [[UIImageView alloc]initWithFrame:CGRectMake(85, 145, 150, 150)];
     imageview0.image = [UIImage imageNamed:@"a0"];
     [self.collectionview1 addSubview:imageview0];
-//    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(85, 1400, 150, 150)];
-//    imageview2.image = [UIImage imageNamed:@"a0"];
-//    [self.collectionview1 addSubview:imageview2];
+    
+    //滑动手势初始化设置
     UIPanGestureRecognizer *gesture1 = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(gestures1:)];
     [self.view addGestureRecognizer:gesture1];
 //    self.collectionview1.userInteractionEnabled=NO;
+    
+    //点击手势初始化设置
     gesture2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(gestures2:)];
     [self.collectionview1 addGestureRecognizer:gesture2];
     [gesture2 setEnabled:NO];
+    
+    //添加左右页面
     self.tableview1 = [self.storyboard instantiateViewControllerWithIdentifier:@"leftTable"];
     self.tableview1.view.frame = CGRectMake(-40, 0, 320, 568);
     [self.view insertSubview:self.tableview1.view belowSubview:self.collectionview1];
     self.tableview2 = [self.storyboard instantiateViewControllerWithIdentifier:@"rightTable"];
     self.tableview2.view.frame = CGRectMake(80, 0, 320, 568);
     [self.view insertSubview:self.tableview2.view belowSubview:self.collectionview1];
+    
+    //查询网络数据
     dataDao *dao = [[dataDao alloc]init];
     [dao startRequest];
+    
     //下拉刷新
     self.collectionview1.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [dao startRequest];
         [self.collectionview1.header endRefreshing];
     }];
     
+    //注册通知
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self
            selector:@selector(hahaha:)
@@ -86,6 +93,15 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(chaxunData:) name:@"leftData" object:nil];
 
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+    //将所有通知注销
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+//添加页面返回增减cell
 -(void)picData:(NSNotification *)notification
 {
     indexSet = [[NSMutableIndexSet alloc]init];
@@ -99,20 +115,21 @@
     [xianshiData removeObjectsAtIndexes:indexSet];
     [self.collectionview1 reloadData];
 }
+
+//左页面通知
 -(void)hahaha:(NSNotification *)num
 {
-//    NSMutableArray *leftArray = [[NSMutableArray alloc]init];
     NSMutableArray *leftArray = [num object];
     [self performSegueWithIdentifier:@"tableToPresent" sender:leftArray];
-
 }
 
+//右页面通知
 -(void)hahaha1:(NSNotification *)num
 {
     [self performSegueWithIdentifier:@"tableToPresent2" sender:nil];
-    
 }
 
+//点击事件
 -(void)gestures2:(UITapGestureRecognizer *)gesture
 {
     [self translation:0];
@@ -120,6 +137,7 @@
     [gesture setEnabled:NO];
 }
 
+//滑动页面事件具体实现
 -(void)gestures1:(UIPanGestureRecognizer *)gesture
 {
 //    if(gesture.state == UIGestureRecognizerStateBegan){
@@ -177,13 +195,9 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
 
 
+#pragma mark  ---------------collectionview dataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [xianshiData count];
@@ -199,7 +213,7 @@
     return cell;
 }
 
-
+#pragma mark  ---------------collectionview delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"------------%ld",(long)indexPath.row);
@@ -207,6 +221,7 @@
         [self performSegueWithIdentifier:@"collectionToCollection2" sender:picData];
 }
 
+#pragma mark  ---------------collectionview DelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(75, 120);
@@ -220,6 +235,7 @@
     return 50;
 }
 
+//动画实现
 -(void)translation:(CGFloat)x
 {
     NSTimeInterval animationDuration=0.30f;
@@ -230,6 +246,7 @@
     
 }
 
+//storyboard 跳转准备
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier  isEqual: @"tableToPresent"]){
@@ -242,6 +259,8 @@
     }
 }
 
+
+//通知获得数据并对数据进行处理
 -(void)chaxunData:(NSNotification *)notification
 {
     self.objects = [notification object];

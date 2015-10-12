@@ -55,7 +55,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 */
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark ------------------------UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 9;
 }
@@ -74,6 +74,8 @@ static NSString * const reuseIdentifier = @"Cell";
         cell.imageview2.hidden = YES;
     return cell;
 }
+
+#pragma mark ------------------------UICollectionView delegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"------------%ld",(long)indexPath.row);
@@ -92,6 +94,7 @@ static NSString * const reuseIdentifier = @"Cell";
     }
 }
 
+#pragma mark  ---------------collectionview DelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(115, 115);
@@ -104,7 +107,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     return 60;
 }
-#pragma mark <UICollectionViewDelegate>
+
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking
@@ -134,10 +137,14 @@ static NSString * const reuseIdentifier = @"Cell";
 	
 }
 */
+
+//通知获得数据
 -(void)picData:(NSNotification *)notification
 {
     self.objects = [notification object];
 }
+
+//关闭按钮实现
 -(void)closepresent
 {
      localData *save = [localData sharedManager];

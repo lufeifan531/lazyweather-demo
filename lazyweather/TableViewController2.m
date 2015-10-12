@@ -39,7 +39,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+#pragma mark -------------------- Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -52,8 +52,6 @@
     else
         return [arry2 count];
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TableViewCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"tablecell2" forIndexPath:indexPath];
     
@@ -80,7 +78,15 @@
     cell.selectedBackgroundView.backgroundColor = [UIColor darkGrayColor];
     return cell;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
+{
+    if(section == 1)
+        return @"城市管理";
+    else
+        return nil;
+}
 
+//删除按钮点击事件
 - (void)buttonDelete:(UIButton *)button
 {
     UIAlertController* alertController  = [UIAlertController alertControllerWithTitle:@"删除" message: @"是否删除这个城市" preferredStyle:UIAlertControllerStyleAlert];
@@ -101,14 +107,8 @@
     //显示
     [self presentViewController:alertController animated:true completion:nil];
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
-{
-    if(section == 1)
-        return @"城市管理";
-    else
-        return nil;
-}
 
+#pragma mark -------------------- Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%ld",(long)indexPath.section);
@@ -125,6 +125,7 @@
        [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+//定位服务
 -(void)dingwei
 {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
@@ -159,7 +160,7 @@
     [self.locationManager stopUpdatingLocation];
 }
 
-#pragma mark Core Location委托方法用于实现位置的更新
+#pragma mark --------------------Core Location委托方法用于实现位置的更新
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     self.currLocation = [locations lastObject];
