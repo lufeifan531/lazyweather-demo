@@ -21,8 +21,6 @@
 @property (strong,nonatomic) NSArray *objects;
 @property (strong,nonatomic) UIRefreshControl *rc;
 @property (strong,nonatomic) CLLocationManager *locationManager;
-
-
 @end
 
 @implementation ViewController
@@ -35,6 +33,10 @@
     NSMutableArray *xianshiData;
     NSMutableIndexSet *indexSet;
     NSMutableArray *selected;
+    UIView *blackview;
+    UIColor *Color1;
+    UIColor *Color2;
+    UIColor *Color3;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,6 +47,7 @@
     
     //主页面collectionview初始化，设置代理
     self.collectionview1.frame = CGRectMake(0, 0, 320, 1000);
+//    self.collectionview1.backgroundColor = [UIColor colorWithRed:240.0/255 green:128.0/255 blue:128.0/255 alpha:0.7];
     _collectionview1.delegate = self;
     _collectionview1.dataSource = self;
     imageview0 = [[UIImageView alloc]initWithFrame:CGRectMake(85, 145, 150, 150)];
@@ -68,6 +71,9 @@
     self.tableview2 = [self.storyboard instantiateViewControllerWithIdentifier:@"rightTable"];
     self.tableview2.view.frame = CGRectMake(80, 0, 320, 568);
     [self.view insertSubview:self.tableview2.view belowSubview:self.collectionview1];
+    blackview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
+//    blackview.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"晴-"]];
+    [self.view insertSubview:blackview belowSubview:self.collectionview1];
     
     //查询网络数据
     dataDao *dao = [[dataDao alloc]init];
@@ -140,9 +146,14 @@
 //滑动页面事件具体实现
 -(void)gestures1:(UIPanGestureRecognizer *)gesture
 {
-//    if(gesture.state == UIGestureRecognizerStateBegan){
-//        self.view.transform = CGAffineTransformMakeTranslation(_pianyi+[gesture translationInView:gesture.view].x,0);
-//    }
+    if(gesture.state == UIGestureRecognizerStateBegan){
+        if(pianyi == 0){
+            if([gesture translationInView:gesture.view].x > 0)
+                [self.tableview2.view setHidden:YES];
+            if([gesture translationInView:gesture.view].x < 0)
+                [self.tableview2.view setHidden:NO];
+        }
+    }
 
     if(gesture.state == UIGestureRecognizerStateChanged){
         if(pianyi + [gesture translationInView:gesture.view].x > 0)
@@ -150,6 +161,7 @@
         if(pianyi + [gesture translationInView:gesture.view].x < 0)
             [self.tableview2.view setHidden:NO];
         self.collectionview1.transform = CGAffineTransformMakeTranslation(pianyi+[gesture translationInView:gesture.view].x,0);
+        blackview.transform = CGAffineTransformMakeTranslation(pianyi+[gesture translationInView:gesture.view].x,0);
     }
     if(gesture.state == UIGestureRecognizerStateEnded){
         if(pianyi == 0){
@@ -242,6 +254,7 @@
     [UIView beginAnimations:@"moveview" context:nil];
     [UIView setAnimationDuration:animationDuration];
     self.collectionview1.transform = CGAffineTransformMakeTranslation(x, 0);
+    blackview.transform = CGAffineTransformMakeTranslation(x, 0);
     [UIView commitAnimations];
     
 }
@@ -326,8 +339,32 @@
     [xianshiData removeObjectsAtIndexes:indexSet];
     [self.collectionview1 reloadData];
     imageview0.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@+",[picData[0] valueForKey:[NSString stringWithFormat:@"pic"]]]];
+    NSString *panduan = [self wenzichuli:[self.objects[0] valueForKey:@"weather"]];
+    if([panduan  isEqual: @"晴"])
+        self.collectionview1.backgroundColor = [UIColor colorWithRed:240.0/255 green:128.0/255 blue:128.0/255 alpha:0.7];
+    if([panduan  isEqual: @"多云"])
+        self.collectionview1.backgroundColor = [UIColor colorWithRed:0.0/255 green:191.0/255 blue:225.0/255 alpha:0.7];
+    if([panduan rangeOfString:@"雨"].location != NSNotFound)
+        self.collectionview1.backgroundColor = [UIColor colorWithRed:138.0/255 green:43.0/255 blue:226.0/255 alpha:0.7];
+    blackview.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@-",panduan]]];
     
 }
+
+//文字处理
+-(NSString *)wenzichuli:(NSString *)string
+{
+    if([string rangeOfString:@"转"].location != NSNotFound){
+        NSRange range = [string rangeOfString:@"转"];
+        NSString *aaaa = [string substringFromIndex:range.location+1];
+        NSString *cccc = [NSString stringWithFormat:@"%@",aaaa];
+        return cccc;
+    }
+    else{
+        NSString *cccc = [NSString stringWithFormat:@"%@",string];
+        return cccc;
+    }
+}
+
 @end
 
 

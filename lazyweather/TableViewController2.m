@@ -61,7 +61,7 @@
     }
     else{
         if(indexPath.row == 0){
-            cell.label.text = arry2[indexPath.row];
+            cell.label.text = @"定位";
             cell.image1.image = [UIImage imageNamed: @"addcity"];
         }
         else{

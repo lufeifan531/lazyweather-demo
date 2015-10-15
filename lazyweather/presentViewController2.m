@@ -34,27 +34,29 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
-    return 0;
+    return 2;
 }
 - (IBAction)fanhui:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tablecell3" forIndexPath:indexPath];
+    UILabel *label = (UILabel*) [cell viewWithTag:5];
+    if(indexPath.row == 0)
+        label.text = @"未 能 完 成";
+    else
+        label.text = @"敬 请 期 待";
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

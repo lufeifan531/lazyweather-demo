@@ -23,9 +23,8 @@
     MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"api.k780.com:88/?app=weather.future&format=json" customHeaderFields:nil];
     MKNetworkOperation *op = [engine operationWithPath:path];
     
-    
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        
+    
 //        NSLog(@"responseData : %@", [operation responseString]);
         NSData *data = [operation responseData];
         NSDictionary *mweather = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -39,7 +38,6 @@
     }];
 
     [engine enqueueOperation:op];
-    
     
 }
 
